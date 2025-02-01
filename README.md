@@ -41,6 +41,7 @@ uvicorn app.main:app --reload
 ## API Endpoints
 
 Open API docs available at: http://127.0.0.1:8000/docs
+
 Sample requests:
 ```bash
 curl http://127.0.0.1:8000/dbs
