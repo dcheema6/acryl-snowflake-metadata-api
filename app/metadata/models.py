@@ -25,7 +25,6 @@ class NumericSummary(BaseModel):
     mean: float
     min: float
     max: float
-    unique_count: Optional[int] = None
 
 
 class NonNumericSummary(BaseModel):
@@ -37,3 +36,4 @@ class TableSummary(BaseModel):
     table_name: str
     row_count: int
     column_summaries: Dict[str, Union[NumericSummary, NonNumericSummary]]
+    query_time_ms: float

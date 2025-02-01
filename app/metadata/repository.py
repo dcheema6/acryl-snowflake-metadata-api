@@ -1,4 +1,5 @@
 from typing import List
+import time
 
 from . import models
 from ..lib import SnowflakeClient
@@ -74,7 +75,6 @@ class Repository:
                     f"AVG({col}) as {col}_mean",
                     f"MIN({col}) as {col}_min",
                     f"MAX({col}) as {col}_max",
-                    f"COUNT(DISTINCT {col}) as {col}_unique_count",
                 ]
             )
 
@@ -83,7 +83,8 @@ class Repository:
             select_parts.extend(
                 [
                     f"COUNT({col}) as {col}_non_null_count",
-                    f"COUNT(DISTINCT {col}) as {col}_unique_count",
+                    # f"COUNT(DISTINCT {col}) as {col}_unique_count",
+                    f"APPROX_COUNT_DISTINCT({col}) as {col}_approx_unique_count",
                 ]
             )
 
@@ -93,8 +94,10 @@ class Repository:
         """
 
         with self.conn.cursor() as cursor:
+            start_time = time.time()
             cursor.execute(query)
             result = cursor.fetchone()
+            query_time_ms = (time.time() - start_time) * 1000  # Convert to milliseconds
 
             # Process results
             row_count = result[0]
@@ -109,9 +112,8 @@ class Repository:
                     mean=result[current_idx + 1],
                     min=result[current_idx + 2],
                     max=result[current_idx + 3],
-                    unique_count=result[current_idx + 4],
                 )
-                current_idx += 5
+                current_idx += 4
 
             # Process non-numeric columns (2 metrics each)
             for col in non_numeric_cols:
@@ -122,7 +124,10 @@ class Repository:
                 current_idx += 2
 
             return models.TableSummary(
-                table_name=table, row_count=row_count, column_summaries=column_summaries
+                table_name=table,
+                row_count=row_count,
+                column_summaries=column_summaries,
+                query_time_ms=query_time_ms,
             )
 
     def close(self):

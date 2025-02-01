@@ -38,7 +38,10 @@ def list_dbs(
     """List all databases in the configured database."""
 
     def get_dbs():
-        return repo.get_databases()
+        try:
+            return repo.get_databases()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     return cache.getCacheOrRefresh(["dbs"], get_dbs)
 
@@ -54,8 +57,8 @@ def list_schemas(
     def get_schemas():
         try:
             return repo.get_schemas(db_name)
-        except Exception:
-            raise HTTPException(status_code=404, detail=f"Database {db_name} not found")
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     return cache.getCacheOrRefresh([db_name], get_schemas)
 
@@ -75,10 +78,8 @@ def list_tables(
     def get_tables():
         try:
             return repo.get_tables(db_name, schema_name)
-        except Exception:
-            raise HTTPException(
-                status_code=404, detail=f"Schema {schema_name} not found"
-            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     return cache.getCacheOrRefresh([db_name, schema_name], get_tables)
 
@@ -99,10 +100,8 @@ def get_columns(
     def get_columns():
         try:
             return repo.get_columns(db_name, schema_name, table_name)
-        except Exception:
-            raise HTTPException(
-                status_code=404, detail=f"Table {schema_name}.{table_name} not found"
-            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     return cache.getCacheOrRefresh([db_name, schema_name, table_name], get_columns)
 
@@ -123,11 +122,10 @@ def get_table_summary(
     def get_table_summary():
         try:
             return repo.get_table_summary(db_name, schema_name, table_name)
-        except Exception:
-            raise HTTPException(
-                status_code=404, detail=f"Table {schema_name}.{table_name} not found"
-            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
-    return cache.getCacheOrRefresh(
-        [db_name, schema_name, table_name], get_table_summary
-    )
+    return get_table_summary()
+    # return cache.getCacheOrRefresh(
+    #     [db_name, schema_name, table_name], get_table_summary
+    # )
