@@ -1,0 +1,6 @@
+fastapi==0.115.8
+uvicorn==0.34.0
+snowflake-connector-python==3.13.2
+python-dotenv==1.0.1
+cachetools==5.5.1
+pydantic==2.10.6
