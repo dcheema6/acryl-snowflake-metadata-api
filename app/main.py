@@ -11,19 +11,18 @@ load_dotenv()
 
 
 def get_metadata_repository():
+    # print("repo init")
     repo = metadata.Repository(client=SnowflakeClient())
     try:
+        # print("repo yield")
         yield repo
     finally:
+        # print("repo close")
         repo.close()
 
 
 def get_cache(ttlCache: cache_factory.TTLCache):
-    def cache_gen():
-        cache = cache_factory.APICache(cache=ttlCache)
-        yield cache
-
-    return cache_gen
+    return lambda: cache_factory.APICache(cache=ttlCache)
 
 
 # Create APIs

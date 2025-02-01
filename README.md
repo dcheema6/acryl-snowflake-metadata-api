@@ -113,3 +113,18 @@ Sat Feb 1
 - 14:40 Adding/updating notes/logs - ~30m
     - Update Log/Notes + Add everything to readme
 - 15:15: Finish
+
+### Submittion QA
+How long did you actually spend on this take-home?
+- Took around 4 hrs to satisfy all requirements
+- Took another 1.5 hrs to clean things up and document things
+
+What was one thing that you thought went well in this exercise?
+- Really enjoyed learning python and its ecosystem
+- Setting up basic server with fast api and snowflake connector was super quick and easy
+- Thinking thru db OOM issues was fun
+
+What is something that you’d want to improve if you had more time
+- Update caching to use wrapper annotations so I can do the dependency injection in of the repo function 
+- Use redis cache for consistency across all instances
+- Spend time on understanding how to optimize the summarization

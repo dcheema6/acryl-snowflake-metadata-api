@@ -31,8 +31,10 @@ class APICache:
 
     def getCacheOrRefresh(self, keys: List[str], func: Callable):
         if self.contains(keys):
+            # print("cache hit")
             return self.get(keys)
         else:
+            # print("cache miss")
             value = func()
             self.set(keys, value)
             return value
