@@ -125,7 +125,7 @@ def get_table_summary(
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    return get_table_summary()
-    # return cache.getCacheOrRefresh(
-    #     [db_name, schema_name, table_name], get_table_summary
-    # )
+    # return get_table_summary()
+    return cache.getCacheOrRefresh(
+        [db_name, schema_name, table_name], get_table_summary
+    )
