@@ -11,11 +11,11 @@ A RESTful API service that provides endpoints for querying Snowflake metadata.
 - Get table summaries with statistics
 
 ## Dependencies
-- [fastapi](https://fastapi.tiangolo.com/): For building REST APIs
-- [uvicorn](https://uvicorn.readthedocs.io/): Dev tooling for hot reloads
+- [fastapi](https://fastapi.tiangolo.com/): Framework for building REST APIs, runs on uvicorn
+- [uvicorn](https://pypi.org/project/uvicorn/): ASGI web server
 - [snowflake-connector-python](https://pypi.org/project/snowflake-connector-python/): For connecting to Snowflake
 - [python-dotenv](https://pypi.org/project/python-dotenv/): For loading environment variables from a `.env` file
-- [cachetools](https://pypi.org/project/cachetools/): For caching API responses
+- [cachetools](https://pypi.org/project/cachetools/): For caching API responses etc.
 - [pydantic](https://pydantic-docs.helpmanual.io/): For validating and parsing data
 
 ## Setup
@@ -96,14 +96,14 @@ Queries that can potentially be OOM in 2 ways:
 
 For handling issue #1:
 - One optimization we can do assuming approxmate statistics works is to use APPROX_COUNT_DISTINCT instead of COUNT(DISTINCT).
-- If the current query slowness is okay, then we can let snowflake take care of by spilling to disk. Otherwse we might have to figure batching ideally within the query itself.
+- If the current query slowness is okay, then we can let snowflake take care of by spilling to disk. Otherwse we might have to create a ETL etc to build a separate just for distinct values.
 
 The issue #2 however is not relevant to us as as we are only using COUNT that has max value of 10^38, which is a crazy number. And other methods like AVG/MIN/MAX will not overflow.
 
 ## Logs
 Sat Feb 1
-- 8:25 Reading through docs - ~10m
-- 8:35 BREAK - ~30m
+- 08:25 Reading through docs - ~10m
+- 08:35 BREAK - ~30m
 - 09:30 Building a basic functional server - ~2h
     - Go through snowflake.connector
     - Go through fast api docs
@@ -120,18 +120,20 @@ Sat Feb 1
 - 14:40 Adding/updating notes/logs - ~30m
     - Update Log/Notes + Add everything to readme
 - 15:15: Finish
+Mon Feb 3
+- 08:00-08:30: fix docs ~30m
 
 ### Submittion QA
 How long did you actually spend on this take-home?
 - Took around 4 hrs to satisfy all requirements
-- Took another 1.5 hrs to clean things up and document things
+- Took another 2 hrs to clean things up and document things
 
 What was one thing that you thought went well in this exercise?
 - Really enjoyed learning python and its ecosystem
 - Setting up basic server with fast api and snowflake connector was super quick and easy
-- Thinking thru db OOM issues was fun
+- Thinking through db OOM issues was fun
 
 What is something that you’d want to improve if you had more time
-- Update caching to use wrapper annotations so I can do the dependency injection in of the repo function 
-- Use redis cache for consistency across all instances
+- Do the dependency injection of repo into cache functions and extract params as keys
+- See how to set this up with redis cache
 - Spend time on understanding how to optimize the summarization
