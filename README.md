@@ -20,12 +20,19 @@ A RESTful API service that provides endpoints for querying Snowflake metadata.
 
 ## Setup
 
-1. Install dependencies:
+1. Set up Pyenv if not already installed: https://github.com/pyenv/pyenv?tab=readme-ov-file#a-getting-pyenv 
+
+2. Switch to python version specified in `.python-version` using pyenv:
 ```bash
-pip3 install -r requirements.txt
+pyenv install
 ```
 
-2. Create a `.env` file with your Snowflake credentials:
+3. Install dependencies:
+```bash
+pyenv exec pip install -r requirements.txt
+```
+
+4. Create a `.env` file with your Snowflake credentials:
 ```
 SNOWFLAKE_ACCOUNT_ID=your_account
 SNOWFLAKE_USER=your_user
@@ -33,9 +40,9 @@ SNOWFLAKE_PASSWORD=your_password
 SNOWFLAKE_WAREHOUSE=your_warehouse
 ```
 
-3. Run the server:
+5. Run the server:
 ```bash
-uvicorn app.main:app --reload
+pyenv exec uvicorn app.main:app --reload
 ```
 
 ## API Endpoints
