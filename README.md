@@ -135,5 +135,14 @@ What was one thing that you thought went well in this exercise?
 
 What is something that you’d want to improve if you had more time
 - Do the dependency injection of repo into cache functions and extract params as keys
-- See how to set this up with redis cache
+- Batch same requests in into a single query
 - Spend time on understanding how to optimize the summarization
+    - Look into [Sampling](https://docs.snowflake.com/en/sql-reference/constructs/sample)
+    - Look into [Cardinality Estimation](https://docs.snowflake.com/en/sql-reference/functions/approx_count_distinct)
+    - Look into [Other optimization techniques](https://select.dev/posts/snowflake-query-optimization)
+
+Futher context need to productionize:
+- Use case: Deep dive into who are users using it and for what purpose?
+- Scalability: What does the flow if traffic looks like over a time period?
+- Availability: Does this service needs to be available 24x7?
+- Security: What are the boundaries of who can access this service?
