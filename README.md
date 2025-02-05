@@ -134,6 +134,7 @@ What was one thing that you thought went well in this exercise?
 - Thinking through db OOM issues was fun
 
 What is something that you’d want to improve if you had more time
+- Look into if connection pool is relevant here, instead of opening a new connection to snowflake for each request
 - Do the dependency injection of repo into cache functions and extract params as keys
 - Batch same requests in into a single query
 - Spend time on understanding how to optimize the summarization
