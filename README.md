@@ -138,7 +138,7 @@ What is something that you’d want to improve if you had more time
 - Batch same requests in into a single query
 - Spend time on understanding how to optimize the summarization
     - Look into [Sampling](https://docs.snowflake.com/en/sql-reference/constructs/sample)
-    - Look into [Cardinality Estimation](https://docs.snowflake.com/en/sql-reference/functions/approx_count_distinct)
+    - Look into [Cardinality Estimation](https://docs.snowflake.com/en/user-guide/querying-approximate-cardinality)
     - Look into [Other optimization techniques](https://select.dev/posts/snowflake-query-optimization)
 
 Futher context need to productionize:
